@@ -1,0 +1,44 @@
+# Git Command Line Cheat Sheet
+
+## Important Terms
+  1. Local - Location describing any branch, commit, or file (changed, created, or deleted) that has not been pushed
+  2. Remote - Location describing any branch, commit, or file that has been pushed by you or anyone else
+  3. Commit - Unlike SVN, a git commit can be exceedingly small (e.g. commenting out a single line). Smaller commits are better in the case of git as it allows you to have more specific control over things, including single-commit rollbacks, or being able to cherry-pick a single commit from one branch to another
+  4. Branch - Branches can have sub-branches ad infinitum. In this manner you can develop multiple parts of a single feature separately, where it makes sense
+  5. Index File - The git index file is basically a list of branches and what revision each branch is currently on
+
+## Git Commands
+
+  >###### Note - Most of this is going to be geared towards command line usage, which is recommended
+
+  >###### Side note - The order of these is roughly the order that most people will use them in a standard workflow
+
+  1. Clone - `git clone <repo_url> <*directory*>` is similar to svn checkout. It creates a local copy of the repo using the (optional) directory argument.
+
+    * Example - `git clone ssh://git@192.168.8.5/CRM/test14.git MyRepo/` will create a local copy of test14.git repo in the relative directory of MyRepo/
+
+  2. Checkout - `git checkout <branch_name>` will change your local repo to the given branch name. This is one of the biggest differences between git and svn, as you can readily switch without redownloading the whole repo.
+
+    * Example - `git checkout Scrum_32` will switch from the current working branch to Scrum_32
+
+  3. Branch - `git branch <branch_name>` will *create* a branch off of the current working branch.
+
+    * Example - `git branch temp_branch`
+
+  4. Fetch - `git fetch` is an important command as it grabs an index of all branches and what "revision" (identified by SHA1 numbers in git) each branch is on, WITHOUT updating your local files or data.
+
+  5. Pull - `git pull origin <branch_name>` is similar to svn update. However depending on the usage, it can also merge branches, so it needs to be used with caution.
+
+    * Example - `git pull origin Scrum_32` will update the index file (the same as `git fetch`) and then update all your local files with the changes from the index file.
+
+    * Merge Example - Let's assume you're on branch Scrum_32. `git pull origin Scrum_31` will merge all changes from Scrum_31 into Scrum_32 locally. This will not update the remote branches until the next `git push`
+
+  6. Status - `git status` will simply output all files with any changes inside of them, and will output files to **be** committed (have been called in `git add`).
+
+  7. Diff - `git diff <file_name>` will output all changes in the file passed
+
+  8. Add - `git add <file_name>` will add to the commit index, which when the next `git commit` is called, will create a local commit with all of the files added.
+
+  9. Commit - `git commit -m <commit_message>` will commit files that have been added to the current commit index with the message passed.
+
+  10. Push - `git push origin <branch_name>` will push *local* commits to the remote branch.
